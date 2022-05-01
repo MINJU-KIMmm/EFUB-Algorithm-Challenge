@@ -1,7 +1,7 @@
 # 👧🏻 퍼비들의 알고리즘 챌린지 👾
 
 ## 참여자
-|[김민주](https://github.com/MINJU-KIMmm)|강민지(https://github.com/nitronium102)|김시연|도소현|
+|[김민주](https://github.com/MINJU-KIMmm)|[강민지](https://github.com/nitronium102)|김시연|도소현|
 |---|---|---|---|
 |![minju](https://avatars.githubusercontent.com/u/81242672?v=4)|![minji](https://github.com/nitronium102.png)||
 
