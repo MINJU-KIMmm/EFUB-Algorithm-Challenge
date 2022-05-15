@@ -1,8 +1,6 @@
 #include <iostream>
 #include <algorithm>
 using namespace std;
-//숫자가 너무 커서 정수형으로 표현하면 오버플로우가 일어날 수 있음. 그래서 문자열로 받아서 자리수 각각마다 더해주기 
-//자리가 올라갈 수 있음 ex)13자리 => 14자리 reverse함수 사용해서 받은 값을 거꾸로 저장하기...
 int main() {
 	string a, b;
 	cin >> a >> b;
@@ -64,7 +62,5 @@ int main() {
 			}
 		}
 	}
-
-	//result의 크기가 10000이기 때문에.. 그대로 출력하면 안됨...
 
 }
