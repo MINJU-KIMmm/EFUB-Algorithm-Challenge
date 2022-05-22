@@ -1,9 +1,9 @@
 # 👧🏻 퍼비들의 알고리즘 챌린지 👾
 
 ## 참여자
-|[김민주](https://github.com/MINJU-KIMmm)|강민지|김시연|도소현|
+|[김민주](https://github.com/MINJU-KIMmm)|[강민지](https://github.com/nitronium102)|[김시연](https://github.com/siyeonkm)|[도소현](https://github.com/sohyundoh)|
 |---|---|---|---|
-|![minju](https://avatars.githubusercontent.com/u/81242672?v=4)|||
+|![minju](https://github.com/MINJU-KIMmm.png)|![minji](https://github.com/nitronium102.png)|![siyeon](https://github.com/siyeonkm.png)|![sohyun](https://github.com/sohyundoh.png)|
 
 ## 스터디 규칙
 
