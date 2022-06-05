@@ -1,4 +1,5 @@
 #include <cstdio>
+
 using namespace std;
 
 int map[9][9], cnt;
