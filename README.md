@@ -26,7 +26,8 @@
         - [CFS] - 코드포스
         - [SEA] - 삼성SW Expert Academy
         - [ETC] - 그외
-5. 원본 저장소로 `Pull Request`를 한다. (매주 3문제 이상, 매주 **일요일**에 Merge예정)
+    - 알고리즘 풀이는 description에 링크 첨부
+5. 원본 저장소로 `Pull Request`를 한다. (매주 3문제 이상, 매주 **일요일**에 Merge예정)
 
 ### 벌금
 
