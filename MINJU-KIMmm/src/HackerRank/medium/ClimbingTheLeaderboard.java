@@ -1,5 +1,4 @@
 package HackerRank.medium;
-
 import java.io.*;
 import java.math.*;
 import java.security.*;
@@ -37,21 +36,26 @@ class Result {
         for(int p:player){
 
             int left=0; //1
-            int right=ranked.size(); //last
-
+            int right=ranked.size()-1; //last
+            int mid=0;
 
             int rank=0;
-            while(left<right){
-                int mid=(left+right)/2;
-                if(ranked.get(mid)<=p){
-                    right=mid;
-                }
-                else{
+            while(left<=right){
+                mid=(left+right)/2;
+                if(p>ranked.get(mid)){
+                    right=mid-1;
+                }else{
                     left=mid+1;
                 }
-            }
-            rank=left;
 
+                if(p==ranked.get(mid)) break;
+            }
+
+            if(p<ranked.get(mid)){
+                rank=mid+1;
+            }else{
+                rank=mid;
+            }
             answer.add(rank+1);
         }
 
@@ -63,7 +67,6 @@ class Result {
     }
 
 }
-
 
 public class ClimbingTheLeaderboard {
     public static void main(String[] args) throws IOException {
