@@ -3,82 +3,63 @@
 //
 
 #include <iostream>
+#include <vector>
+#include <algorithm>
 using namespace std;
 
-int calcMoney(string start, int time){
-    int answer = 0;
-    int start_hour = stoi(start.substr(0, 2));
-    int start_minute = stoi(start.substr(3, 2));
-    int end_hour = (start_hour + (start_minute + time) / 60) % 24;
-    int end_minute = (start_minute + time) % 60;
+/*
+ * 1) 중복 없는 글자
+ * 2) 바퀴는 시계방향 회전 -> 화살표는 반시계방향 회전
+ * => 출력 시 방향을 바꿔서 출력해야 함
+ * 3) 바퀴 k번 회전 시 글자가 변하는 횟수 s, 멈춘 글자 c
+ */
 
-    // 2) zone2 : 19:00 ~ 23:59 && 00:00 ~ 06:59
-
-    // 1) zone 2에서 시작
-    if ((start_hour >= 19 && start_hour < 24) || (start_hour >= 0 && start_hour < 7)) {
-        // 2-1) 같은 zone 안에서 해결
-        if (end_hour >= 19 || end_hour < 7) {
-            answer += 5 * time;
-        }
-            // 2-2) zone2 -> zone1
-        else {
-            answer += 5 * (60 - start_minute);
-            answer += 10 * end_minute;
-        }
+bool checkWheel(vector<char> &arr, int idx, char c) {
+    // 1) 해당 자리에 동일한 글자가 있는 경우
+    if (arr[idx] == c){
+        return true;
     }
-
-        // 2) zone 1에서 시작
-    else if (start_hour >= 7 && start_hour < 19) {
-        // 1-1) 같은 zone 안에서 해결
-        if (end_hour < 19) {
-            answer += 10 * time;
+    // 2) 해당 자리에 ?이 있는 경우
+    if (arr[idx] == '?') {
+        // 다른 자리에 동일한 글자가 있을 경우 false 리턴(중복)
+        if (find(arr.begin(), arr.end(), c) != arr.end()){
+            return false;
         }
-            // 1-2) zone1 -> zone2
-        else {
-            answer += 10 * (60 - start_minute);
-            answer += 5 * end_minute;
-        }
+        arr[idx] = c;
+        return true;
     }
-    return answer;
-
-//    // 2) 다른 통화요금 적용되는 경우(통화시간 max 60분)
-//    // 1) zone1 -> zone2
-//    if (start_hour < 19 && end_hour >= 19){
-//        answer += 10 * (60 - start_minute);
-//        answer += 5 * end_minute;
-//        return answer;
-//    }
-//    // 2) zone2 -> zone1
-//    if (start_hour < 7 && end_hour >= 7) {
-//        answer += 5 * (60 - start_minute);
-//        answer += 10 * end_minute;
-//        return answer;
-//    }
-//
-//    // 1) 같은 통화요금 적용되는 경우
-//    // 1-1) zone1 : 07:00 ~ 18:59
-//    if (start_hour >= 7 && end_hour >= 7 && end_hour < 19){
-//        answer += time * 10;
-//    } else {
-//        // 1-2) zone2 : 19:00 ~ 06:59
-//        answer += time * 5;
-//    }
-//
+    // 3) 해당 자리에 ?이 아닌 다른 글자가 있는 경우
+    return false;
 }
 
 int main() {
-    int n, time;
-    string start;
-
-    int answer = 0;
+    int n, k, s;
+    char c;
 
     // 입력
-    cin >> n;
-    while (n--) {
-        cin >> start >> time;
-        // 연산
-        answer += calcMoney(start, time);
+    cin >> n >> k;
+
+    // 연산
+    int idx = 0;
+    vector<char> arr(n, '?');
+    while (k--) {
+        // 1) 바퀴의 모든 칸이 결정되지 않았으므로 ?로 채우기
+        cin >> s >> c;
+        // 2) 화살표의 인덱스 결정
+        idx = (idx + s) % n;
+        // 3) 글자 확인
+        if (!checkWheel(arr, idx, c)){
+            cout << "!";
+            return 0;
+        }
     }
-    // 출력
-    cout << answer;
+    // 4) 출력 : 마지막 회전에서 화살표가 가리키는 문자부터 시계방향으로 출력
+    // 시작 : idx, 방향 : 반시계방향(i--)
+    for (int i=idx; i>=0; i--){
+        cout << arr[i] << ' ';
+    }
+    for (int i=n-1; i>idx; i--){
+        cout << arr[i] << ' ';
+    }
+
 }
