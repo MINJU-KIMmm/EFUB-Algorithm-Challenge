@@ -1,65 +1,66 @@
-﻿//
-// Created by KangMinji on 2022-11-13.
-//
-
-#include <iostream>
-#include <vector>
-#include <cstring>
-
+﻿#include <iostream>
+#include <queue>
 using namespace std;
-const int MAX = 51;
+typedef pair<int, int> ci;
 
-int dx[] = {1, 0, -1, 0};
-int dy[] = {0, 1, 0, -1};
-bool ground[MAX][MAX];
-bool visited[MAX][MAX];
+/*
+배추 구역 하나당 배추흰지렁이 1마리
+인접이므로 bfs 사용
+*/
+void bfs(int x, int y, int n, int m, vector<vector<bool>> &board){
+    int dx[4] = {0, 0, -1, 1};
+    int dy[4] = {1, -1, 0, 0};
+    queue<ci> q;
 
-int m, n;
+    // 첫 지점 표시
+    q.push({x, y});
+    board[x][y] = false;
 
-void dfs(int y, int x) {
-    visited[y][x] = true;
-    for (int i = 0; i < 4; i++) {
-        int nx = x + dx[i];
-        int ny = y + dy[i];
+    // 인접 지역 탐색 수행
+    while(!q.empty()){
+        int x = q.front().first;
+        int y = q.front().second;
+        q.pop();
 
-        // 밭 범위 제한
-        if (nx < 0 || nx >= m || ny < 0 || ny >= n) {
-            continue;
-        }
+        for (int i=0; i<4; i++){
+            int nx = x + dx[i];
+            int ny = y + dy[i];
 
-        // 탐색 지속 : 방문 X & 배추 존재
-        if (ground[ny][nx] && !visited[ny][nx]){
-            dfs(ny, nx);
+            if (nx < 0 || nx >= n || ny < 0 || ny >= m){
+                continue;
+            }
+            if (board[nx][ny]) {
+                board[nx][ny] = false;
+                q.push({nx, ny});
+            }
         }
     }
+
 }
 
-// 인접 그래프 개수 찾기
 int main() {
-    int t, k, x, y;
+    int t, m, n, k, x, y;
 
+    // 입력
     cin >> t;
-    while (t--) {
+    while(t--){
         cin >> m >> n >> k;
-
-        // 🔥 초기화 : https://code-kh-studio.tistory.com/5
-        memset(ground, 0, sizeof(ground));
-        memset(visited, 0, sizeof(visited));
-
-        while (k--) {
+        vector<vector<bool>> board(n, vector<bool>(m, false));
+        while(k--){
             cin >> x >> y;
-            ground[y][x] = 1;
+            board[y][x] = true;
         }
 
-        int ans = 0; // 배추흰지렁이 수
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                if (ground[i][j] && !visited[i][j]) {
-                    ans++;
-                    dfs(i, j);
+        // 연산
+        int cnt = 0; // 구역의 개수
+        for (int i=0; i<n; i++){
+            for (int j=0; j<m; j++){
+                if (board[i][j]){ // 새로운 구역 발견
+                    cnt++; // 구역의 개수 증가
+                    bfs(i, j, n, m, board); // 인접 구역 방문 표시
                 }
             }
         }
-        cout << ans << "\n";
+        cout << cnt << "\n";
     }
 }
