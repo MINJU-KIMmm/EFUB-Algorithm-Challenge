@@ -1,53 +1,56 @@
-import itertools
 import sys
-from collections import deque
 
 input = sys.stdin.readline
 
-def dfs(cnt):
-    global ans
+n = int(input())
+arr = [list(map(int, input().split())) for _ in range(n)]
+order, visited = [0 for _ in range(9)], [0 for _ in range(9)]
+order[3] = 0
+visited[3] = 1
+answer = 0
 
-    if cnt==9:
-        start, score = 0, 0
-        for inning in a:
-            out, b1, b2, b3 = 0,0,0,0
+def dfs(cnt):
+    global answer
+
+    #조합 끝
+    if cnt == 9:
+        now, score = 0, 0
+        for inning in arr:
+            out, b1, b2, b3 = 0, 0, 0, 0
+
             while out < 3:
-                p = select[start]
-                if inning[p] == 0:
+                batter = order[now]
+                if inning[batter] == 0:
                     out += 1
-                elif inning[p] == 1:
+                elif inning[batter] == 1:
                     score += b3
                     b1, b2, b3 = 1, b1, b2
-                elif inning[p] == 2:
-                    score += b2 + b3
+                elif inning[batter] == 2:
+                    score += b2+b3
                     b1, b2, b3 = 0, 1, b1
-                elif inning[p] == 3:
-                    score += b1 + b2 + b3
+                elif inning[batter] == 3:
+                    score += b1+b2+b3
                     b1, b2, b3 = 0, 0, 1
-                elif inning[p] == 4:
-                    score += b1 + b2 + b3 + 1
+                elif inning[batter] == 4:
+                    score += b1+b2+b3+1
                     b1, b2, b3 = 0, 0, 0
 
-                start += 1
-                start %= 9
+                now += 1
+                now %= 9
 
-        ans = max(ans, score)
+        answer = max(answer, score)
         return
 
+    #조합
     for i in range(9):
-        if c[i]:
+        if visited[i]:
             continue
-        c[i] = 1
-        select[i] = cnt
+        visited[i] = 1
+        order[i] = cnt
         dfs(cnt+1)
-        c[i] = 0
-        select[i] = 0
+        visited[i] = 0
+        order[i] = 0
 
-n = int(input())
-a = [list(map(int, input().split())) for _ in range(n)]
-select, c = [0 for _ in range(9)], [0 for _ in range(9)]
-select[3], c[3] = 0, 1
-ans = 0
+
 dfs(1)
-
-print(ans)
+print(answer)
