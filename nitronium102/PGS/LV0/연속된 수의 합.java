@@ -1,24 +1,17 @@
 class Solution {
-    public int solution(int[] common) {
-        int answer = 0;
+    public int[] solution(int num, int total) {
+        int[] answer = new int[num];
+        // x+1, x+2, ..., x+num
+        // = num*x + (num)*(num-1)/2 = total
+        // x = ( total-(num)*(num-1)/2 ) / num
         
-        Boolean isSum = false;
-        int gap;
-        // 1) 등차인 경우
-        if (common[2]-common[1] == common[1]-common[0]){
-            gap = common[1] - common[0];
-            isSum= true;
-        }
-        // 2) 등비인 경우
-        else {
-            gap = common[1]/common[0];
+        int sum = (num)*(num-1)/2;
+        int x = (total - sum) / num;
+        
+        for (int i=1; i<=num; i++){
+            answer[i-1] = x+i-1;
         }
         
-        if (isSum){
-            answer = common[common.length-1]+gap;
-        } else {
-            answer = common[common.length-1]*gap;
-        }
         return answer;
     }
 }
