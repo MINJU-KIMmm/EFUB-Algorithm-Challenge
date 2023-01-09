@@ -1,21 +1,17 @@
 class Solution {
     public int[] solution(int num, int total) {
         int[] answer = new int[num];
+        // x+1, x+2, ..., x+num
+        // = num*x + (num)*(num-1)/2 = total
+        // x = ( total-(num)*(num-1)/2 ) / num
         
-        // x, x+1, x+2, x+3 = total
-        // num*x + (for 0 ~ num-1) = total
-        // x = (total - (0 ~ num-1) ) / num
+        int sum = (num)*(num-1)/2;
+        int x = (total - sum) / num;
         
-        int sum = 0;
-        for (int i=1; i<num; i++){
-            sum += i;
+        for (int i=1; i<=num; i++){
+            answer[i-1] = x+i-1;
         }
-        int start = (total - sum) / num;
         
-        for (int i=0; i<num; i++){
-            answer[i] = start+i;
-        }
-            
         return answer;
     }
 }

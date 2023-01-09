@@ -1,26 +1,23 @@
-import java.io.*;
-
 class Solution {
     public int solution(String[] babbling) {
         int answer = 0;
+        String[] wordList = {"aya", "ye", "woo", "ma"};
         
-        // 조카가 발음할 수 있는 단어의 개수
-        // aya, ye, woo, ma 네 가지 발음 최대 1번씩 사용해 이어붙인 발음
-        String[] words = {"aya", "ye", "woo", "ma"};
-        
-        for (String babb : babbling){
-            for (String word : words){
-                babb = babb.replaceFirst(word, "");
+        // babbleList에 있는 단어로 옹알이를 발음할 수 있으면 통과
+        for (String babb : babbling) {
+            for (String word : wordList){
+                babb = babb.replaceFirst(word, "?");
             }
             System.out.println(babb);
-            if (babb.isEmpty()){
-                answer++;
+            int flag = 1;
+            for (int i=0; i<babb.length(); i++){
+                if (babb.charAt(i) != '?'){
+                    flag = 0;
+                    break;
+                }
             }
-            // if (babb.replaceAll(" ", "").equals("")){
-            //     answer++;
-            // }
+            answer += flag;
         }
-        
         return answer;
     }
 }
