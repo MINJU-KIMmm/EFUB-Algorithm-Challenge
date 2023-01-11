@@ -3,41 +3,40 @@ import sys
 N, M = map(int, input().split())
 chicken = []
 home = []
-answer = sys.maxsize
 
 for i in range(N):
-    temp = list(map(int, input().split()))
+    inputs = list(map(int, input().split()))
     for j in range(N):
-        if temp[j]==1:
+        if inputs[j] == 1:
             home.append((i,j))
-        elif temp[j]==2:
+        elif inputs[j] == 2:
             chicken.append((i,j))
 
 
-open = [0]*len(chicken)
+visited = [0]*len(chicken)
+answer = sys.maxsize
 
 
-def dfs(start, depth):
+def dfs(depth, start):
     global answer
+
     if depth==M:
-        total = 0
-        for i in range(len(home)):
-            r1, c1 = home[i]
-            dist = sys.maxsize
-            for j in range(len(chicken)):
-                if open[j]:
-                    r2, c2 = chicken[j]
-                    dist = min(dist, abs(r1-r2)+abs(c1-c2))
-
-            total += dist
-
-        answer = min(answer, total)
+        total_cost = 0
+        for i, j in home:
+            cost = sys.maxsize
+            for k in range(len(visited)):
+                if visited[k]:
+                    ci, cj = chicken[k]
+                    cost = min(cost, abs(i-ci)+abs(j-cj))
+            total_cost += cost
+        answer = min(answer, total_cost)
         return
 
     for i in range(start, len(chicken)):
-        open[i] = 1
-        dfs(i+1, depth+1)
-        open[i] = 0
+        visited[i] = 1
+        dfs(depth+1, i+1)
+        visited[i] = 0
+
 
 dfs(0, 0)
 print(answer)
