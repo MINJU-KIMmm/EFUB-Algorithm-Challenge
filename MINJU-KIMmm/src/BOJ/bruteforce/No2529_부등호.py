@@ -10,25 +10,24 @@ def dfs(depth, num):
         return
 
     for i in range(0, 10):
-        if not visited[i]:
-            if depth == 0 or check(depth, num[-1], str(i)):
+        if depth==0 or check(depth, num+str(i)):
+            if not visited[i]:
                 visited[i] = 1
-                dfs(depth+1, num+str(i))
+                dfs(depth+1, num+(str(i)))
                 visited[i] = 0
 
 
-def check(i, before, now):
+def check(i, num):
     if arr[i-1] == '<':
-        if int(before) > int(now):
+        if int(num[-2]) > int(num[-1]):
             return False
     else:
-        if int(before) < int(now):
+        if int(num[-2]) < int(num[-1]):
             return False
 
     return True
 
 
 dfs(0, '')
-#nums.sort()
 print(nums[-1])
 print(nums[0])
